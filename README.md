@@ -2,6 +2,7 @@
 
 ## About ##
 Vat-Validation is a PHP class allowing you to
+
 - Validate a VAT number
 - Retrieve information like the name or the address of the company
 
