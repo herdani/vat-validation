@@ -1,10 +1,13 @@
 <?php
+
+use SoapClient;
+
 class vatValidation
 {
 	const WSDL = "http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl";
 	private $_client = null;
 
-	private $options  = array(
+	private $_options  = array(
 						'debug' => false,
 						);	
 	
@@ -38,7 +41,13 @@ class vatValidation
 
 		if($rs->valid) {
 			$this->_valid = true;
-			list($denomination,$name) = explode(" " ,$rs->name,2);
+			$name_arr = explode(" ", $rs->name, 2);
+			if (count($name_arr) > 1) {
+				list($denomination,$name) = $name_arr;
+			} else {
+				$denomination = $name_arr[0];
+				$name = "";
+			}
 			$this->_data = array(
 									'denomination' => 	$denomination, 
 									'name' => 			$this->cleanUpString($name), 
